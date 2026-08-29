@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-humanis-blue: #0f2c59;
+  --color-humanis-yellow: #f9a826;
+  --color-humanis-red: #e63946;
+  --color-humanis-green: #2a9d8f;
+
+  --font-sans: var(--font-inter);
+  --font-poppins: var(--font-poppins);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
