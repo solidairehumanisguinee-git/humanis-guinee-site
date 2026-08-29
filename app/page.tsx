@@ -191,7 +191,7 @@ export default function Home() {
               Vous avez du temps à partager à Bordeaux ou ailleurs ? Rejoignez l&apos;équipe.
             </p>
             <a
-              href="https://airtable.com/appnyC5r7ZozZv90q/shrYAGEUMuktH1vZM"
+              href="https://airtable.com/appnyC5r7ZozZv90q/shrfMxVfQpVkC9zJI"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-humanis-yellow text-humanis-blue font-bold py-3 px-8 rounded-full hover:bg-yellow-400 transition"
