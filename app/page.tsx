@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { FlagFR, FlagGN } from "@/components/FlagIcon";
+import { FacebookIcon, TikTokIcon } from "@/components/SocialIcons";
 import logo from "@/public/logo.png";
 
 export default function Home() {
@@ -162,9 +163,27 @@ export default function Home() {
             <p className="mb-8">
               <strong>Siège :</strong> Cadaujac, Bordeaux (France)
             </p>
-            <p className="text-gray-300 text-sm">
-              Réseaux sociaux (TikTok, Instagram) à venir prochainement.
-            </p>
+            <p className="text-gray-300 text-sm mb-4">Suivez-nous :</p>
+            <div className="flex gap-4">
+              <a
+                href="https://www.facebook.com/profile.php?id=61593583510607"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Facebook"
+                className="w-11 h-11 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-humanis-yellow hover:text-humanis-blue transition"
+              >
+                <FacebookIcon className="w-5 h-5" />
+              </a>
+              <a
+                href="https://www.tiktok.com/@asso.humanis.guin"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="TikTok"
+                className="w-11 h-11 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-humanis-yellow hover:text-humanis-blue transition"
+              >
+                <TikTokIcon className="w-5 h-5" />
+              </a>
+            </div>
           </div>
           <div className="bg-white/10 p-10 rounded-2xl flex flex-col justify-center items-center backdrop-blur-sm">
             <h3 className="text-2xl font-bold mb-4 text-humanis-yellow">Devenir Bénévole</h3>
