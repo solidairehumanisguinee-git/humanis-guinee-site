@@ -1,3 +1,6 @@
+import Image from "next/image";
+import logo from "@/public/logo.png";
+
 const NAV_LINKS = [
   { href: "#a-propos", label: "À Propos" },
   { href: "#actions", label: "Nos Actions" },
@@ -8,8 +11,13 @@ export default function Header() {
   return (
     <header className="fixed w-full z-50 bg-white shadow-sm h-20 flex items-center">
       <div className="max-w-7xl mx-auto px-4 w-full flex justify-between items-center">
-        <a href="#accueil" className="font-poppins font-bold text-humanis-blue text-xl">
-          HUMANIS GUINÉE
+        <a href="#accueil" className="flex items-center gap-3">
+          <span className="relative w-12 h-12 rounded-full overflow-hidden shrink-0">
+            <Image src={logo} alt="Humanis Guinée Solidarité" fill className="object-cover" />
+          </span>
+          <span className="font-poppins font-bold text-humanis-blue text-xl">
+            HUMANIS GUINÉE
+          </span>
         </a>
         <nav className="hidden md:flex space-x-6 font-medium text-humanis-blue">
           {NAV_LINKS.map((link) => (

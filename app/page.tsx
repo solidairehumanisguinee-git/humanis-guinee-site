@@ -1,3 +1,7 @@
+import Image from "next/image";
+import { FlagFR, FlagGN } from "@/components/FlagIcon";
+import logo from "@/public/logo.png";
+
 export default function Home() {
   return (
     <>
@@ -7,6 +11,15 @@ export default function Home() {
         className="scroll-mt-20 min-h-[80vh] flex items-center justify-center bg-humanis-blue text-center px-4"
       >
         <div className="max-w-4xl mx-auto">
+          <span className="relative w-28 h-28 rounded-full overflow-hidden inline-block mb-6 shadow-lg">
+            <Image
+              src={logo}
+              alt="Humanis Guinée Solidarité"
+              fill
+              className="object-cover"
+              priority
+            />
+          </span>
           <h2 className="text-humanis-yellow font-bold uppercase tracking-widest mb-4">
             Deux pays — Un seul engagement
           </h2>
@@ -38,7 +51,10 @@ export default function Home() {
         <h2 className="text-4xl font-bold text-humanis-blue mb-12">Nos Actions Sur Le Terrain</h2>
         <div className="grid md:grid-cols-2 gap-10">
           <div className="bg-white p-10 rounded-2xl shadow-lg border-t-8 border-humanis-blue flex flex-col items-center">
-            <h3 className="text-3xl font-bold text-humanis-blue mb-6">🇫🇷 À Bordeaux</h3>
+            <h3 className="text-3xl font-bold text-humanis-blue mb-6 flex items-center justify-center gap-3">
+              <FlagFR className="w-8 h-6 rounded-sm shadow-sm" />
+              À Bordeaux
+            </h3>
             <p className="text-gray-600 mb-6 text-lg">
               Nous agissons localement par l&apos;entraide citoyenne. Nous accompagnons les
               nouveaux arrivants dans leur intégration et proposons une assistance sociale.
@@ -50,7 +66,10 @@ export default function Home() {
             </ul>
           </div>
           <div className="bg-white p-10 rounded-2xl shadow-lg border-t-8 border-humanis-red flex flex-col items-center">
-            <h3 className="text-3xl font-bold text-humanis-red mb-6">🇬🇳 En Guinée</h3>
+            <h3 className="text-3xl font-bold text-humanis-red mb-6 flex items-center justify-center gap-3">
+              <FlagGN className="w-8 h-6 rounded-sm shadow-sm" />
+              En Guinée
+            </h3>
             <p className="text-gray-600 mb-6 text-lg">
               Nous apportons une aide vitale. Nous finançons l&apos;accès à l&apos;eau potable
               dans les villages isolés et soutenons activement les orphelinats et la
