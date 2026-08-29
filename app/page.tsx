@@ -190,9 +190,8 @@ export default function Home() {
             <p className="mb-8 text-center text-gray-200">
               Vous avez du temps à partager à Bordeaux ou ailleurs ? Rejoignez l&apos;équipe.
             </p>
-            {/* TODO: remplacer par votre lien de formulaire Airtable */}
             <a
-              href="#"
+              href="https://airtable.com/appnyC5r7ZozZv90q/shrYAGEUMuktH1vZM"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-humanis-yellow text-humanis-blue font-bold py-3 px-8 rounded-full hover:bg-yellow-400 transition"
