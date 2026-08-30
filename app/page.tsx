@@ -156,8 +156,8 @@ export default function Home() {
             <h3 className="text-2xl font-bold mb-6 text-humanis-yellow">Nous contacter</h3>
             <p className="mb-2">
               <strong>Email :</strong>{" "}
-              <a href="mailto:solidairehumanisguinee@gmail.com" className="hover:underline">
-                solidairehumanisguinee@gmail.com
+              <a href="mailto:contact@humanisguinee.fr" className="hover:underline">
+                contact@humanisguinee.fr
               </a>
             </p>
             <p className="mb-8">

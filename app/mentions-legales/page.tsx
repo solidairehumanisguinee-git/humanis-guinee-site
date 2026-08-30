@@ -21,8 +21,8 @@ export default function MentionsLegales() {
           </p>
           <p className="mt-2">
             Contact :{" "}
-            <a href="mailto:solidairehumanisguinee@gmail.com" className="text-humanis-blue hover:underline">
-              solidairehumanisguinee@gmail.com
+            <a href="mailto:contact@humanisguinee.fr" className="text-humanis-blue hover:underline">
+              contact@humanisguinee.fr
             </a>
           </p>
         </div>

@@ -17,8 +17,8 @@ export default function PolitiqueConfidentialite() {
             Ce site est édité par l&apos;association Humanis Guinée Solidarité (association loi
             1901, RNA W332037673), 3 rue Rosa Bonheur, 33140 Cadaujac. Pour toute question
             relative à vos données personnelles, contactez-nous à{" "}
-            <a href="mailto:solidairehumanisguinee@gmail.com" className="text-humanis-blue hover:underline">
-              solidairehumanisguinee@gmail.com
+            <a href="mailto:contact@humanisguinee.fr" className="text-humanis-blue hover:underline">
+              contact@humanisguinee.fr
             </a>
             .
           </p>
@@ -96,8 +96,8 @@ export default function PolitiqueConfidentialite() {
             Conformément au RGPD, vous disposez d&apos;un droit d&apos;accès, de rectification,
             d&apos;effacement, de limitation et d&apos;opposition concernant vos données. Pour
             exercer ces droits, contactez-nous à{" "}
-            <a href="mailto:solidairehumanisguinee@gmail.com" className="text-humanis-blue hover:underline">
-              solidairehumanisguinee@gmail.com
+            <a href="mailto:contact@humanisguinee.fr" className="text-humanis-blue hover:underline">
+              contact@humanisguinee.fr
             </a>
             . Vous pouvez également introduire une réclamation auprès de la{" "}
             <a

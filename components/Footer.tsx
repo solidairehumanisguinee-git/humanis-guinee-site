@@ -9,8 +9,8 @@ export default function Footer() {
         <Image src={logo} alt="Humanis Guinée Solidarité" fill className="object-cover" />
       </span>
       <p className="mb-2">
-        <a href="mailto:solidairehumanisguinee@gmail.com" className="hover:underline">
-          solidairehumanisguinee@gmail.com
+        <a href="mailto:contact@humanisguinee.fr" className="hover:underline">
+          contact@humanisguinee.fr
         </a>
       </p>
       <p className="text-humanis-yellow font-bold text-lg">
