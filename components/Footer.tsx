@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import logo from "@/public/logo.png";
 
 export default function Footer() {
@@ -17,6 +18,15 @@ export default function Footer() {
       </p>
       <p className="text-gray-300 text-sm mt-4">
         © {new Date().getFullYear()} Association Humanis Guinée Solidarité.
+      </p>
+      <p className="text-gray-400 text-xs mt-3 space-x-3">
+        <Link href="/mentions-legales" className="hover:underline hover:text-white">
+          Mentions légales
+        </Link>
+        <span>·</span>
+        <Link href="/politique-de-confidentialite" className="hover:underline hover:text-white">
+          Politique de confidentialité
+        </Link>
       </p>
     </footer>
   );
