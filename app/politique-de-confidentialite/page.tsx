@@ -82,6 +82,11 @@ export default function PolitiqueConfidentialite() {
             <li>Airtable Inc. (hébergement du formulaire bénévole) — société américaine.</li>
             <li>HelloAsso (plateforme de don) — société française.</li>
             <li>Vercel Inc. (hébergement du site) — société américaine.</li>
+            <li>
+              OVH SAS (réservation du nom de domaine humanisguinee.fr) — société française ; OVH
+              n&apos;a accès à aucune donnée des visiteurs du site, son rôle se limite à la
+              gestion technique du nom de domaine.
+            </li>
           </ul>
         </div>
 

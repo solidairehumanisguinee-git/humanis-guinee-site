@@ -15,9 +15,25 @@ const poppins = Poppins({
   weight: ["400", "600", "700", "800"],
 });
 
+const title = "Humanis Guinée Solidarité | La Solidarité ici et là-bas";
+const description =
+  "La solidarité n'a pas de frontières. Parce que l'entraide commence ici à Bordeaux, et agit aussi là-bas en Guinée.";
+
 export const metadata: Metadata = {
-  title: "Humanis Guinée Solidarité | La Solidarité ici et là-bas",
-  description: "Un pont solidaire entre Bordeaux et la Guinée.",
+  metadataBase: new URL("https://www.humanisguinee.fr"),
+  title,
+  description,
+  openGraph: {
+    title,
+    description,
+    locale: "fr_FR",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

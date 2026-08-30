@@ -50,6 +50,24 @@ export default function MentionsLegales() {
         </div>
 
         <div>
+          <h2 className="text-xl font-bold text-humanis-blue mb-2">Nom de domaine</h2>
+          <p>
+            Le nom de domaine humanisguinee.fr est déposé auprès de OVH SAS, société au capital
+            de 50 000 000 €, RCS Lille Métropole 424 761 419 00045, dont le siège social est
+            situé 2 rue Kellermann, 59100 Roubaix, France —{" "}
+            <a
+              href="https://www.ovhcloud.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-humanis-blue hover:underline"
+            >
+              ovhcloud.com
+            </a>
+            .
+          </p>
+        </div>
+
+        <div>
           <h2 className="text-xl font-bold text-humanis-blue mb-2">Propriété intellectuelle</h2>
           <p>
             L&apos;ensemble des contenus présents sur ce site (textes, logo, images, mise en
