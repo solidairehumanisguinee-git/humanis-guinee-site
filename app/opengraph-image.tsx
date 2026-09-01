@@ -26,9 +26,9 @@ export default async function Image() {
       >
         <img
           src={logoSrc}
-          width={220}
-          height={220}
-          style={{ borderRadius: "50%" }}
+          width={440}
+          height={293}
+          style={{ borderRadius: 20, background: "white", padding: 16 }}
         />
         <div
           style={{

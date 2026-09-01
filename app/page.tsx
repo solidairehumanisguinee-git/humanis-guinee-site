@@ -12,12 +12,12 @@ export default function Home() {
         className="scroll-mt-20 min-h-[80vh] flex items-center justify-center bg-humanis-blue text-center px-4"
       >
         <div className="max-w-4xl mx-auto">
-          <span className="relative w-28 h-28 rounded-full overflow-hidden inline-block mb-6 shadow-lg">
+          <span className="relative w-52 h-32 rounded-2xl bg-white p-3 inline-block mb-6 shadow-lg">
             <Image
               src={logo}
               alt="Humanis Guinée Solidarité"
               fill
-              className="object-cover"
+              className="object-contain p-1"
               priority
             />
           </span>

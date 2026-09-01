@@ -5,8 +5,8 @@ import logo from "@/public/logo.png";
 export default function Footer() {
   return (
     <footer className="bg-humanis-blue text-white text-center py-10">
-      <span className="relative w-20 h-20 rounded-full overflow-hidden inline-block mb-4">
-        <Image src={logo} alt="Humanis Guinée Solidarité" fill className="object-cover" />
+      <span className="relative w-32 h-20 rounded-xl bg-white p-2 inline-block mb-4">
+        <Image src={logo} alt="Humanis Guinée Solidarité" fill className="object-contain p-1" />
       </span>
       <p className="mb-2">
         <a href="mailto:contact@humanisguinee.fr" className="hover:underline">

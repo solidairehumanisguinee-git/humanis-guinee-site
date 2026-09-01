@@ -12,8 +12,8 @@ export default function Header() {
     <header className="fixed w-full z-50 bg-white shadow-sm h-20 flex items-center">
       <div className="max-w-7xl mx-auto px-4 w-full flex justify-between items-center">
         <a href="/#accueil" className="flex items-center gap-3">
-          <span className="relative w-12 h-12 rounded-full overflow-hidden shrink-0">
-            <Image src={logo} alt="Humanis Guinée Solidarité" fill className="object-cover" />
+          <span className="relative h-12 w-20 shrink-0">
+            <Image src={logo} alt="Humanis Guinée Solidarité" fill className="object-contain" />
           </span>
           <span className="font-poppins font-bold text-humanis-blue text-xl">
             HUMANIS GUINÉE
