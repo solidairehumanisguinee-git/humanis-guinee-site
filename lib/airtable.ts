@@ -4,7 +4,7 @@ export type Actualite = {
   date: string | null;
   resume: string;
   contenu: string;
-  photoUrl: string | null;
+  photoUrls: string[];
 };
 
 type AirtableAttachment = { url: string };
@@ -35,7 +35,7 @@ function recordToActualite(record: AirtableRecord): Actualite {
     date: record.fields.Date ?? null,
     resume: record.fields.Résumé ?? "",
     contenu: record.fields.Contenu ?? "",
-    photoUrl: record.fields.Photo?.[0]?.url ?? null,
+    photoUrls: record.fields.Photo?.map((p) => p.url) ?? [],
   };
 }
 

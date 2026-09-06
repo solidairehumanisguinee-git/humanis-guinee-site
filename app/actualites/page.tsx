@@ -37,12 +37,19 @@ export default async function Actualites() {
               href={`/actualites/${actu.id}`}
               className="bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-lg transition flex flex-col"
             >
-              {actu.photoUrl && (
-                <img
-                  src={actu.photoUrl}
-                  alt={actu.titre}
-                  className="w-full h-48 object-cover"
-                />
+              {actu.photoUrls.length > 0 && (
+                <div className="relative">
+                  <img
+                    src={actu.photoUrls[0]}
+                    alt={actu.titre}
+                    className="w-full h-48 object-cover"
+                  />
+                  {actu.photoUrls.length > 1 && (
+                    <span className="absolute bottom-2 right-2 bg-black/60 text-white text-xs font-bold px-2 py-1 rounded-full">
+                      +{actu.photoUrls.length - 1} photo{actu.photoUrls.length > 2 ? "s" : ""}
+                    </span>
+                  )}
+                </div>
               )}
               <div className="p-6 flex flex-col flex-1">
                 <p className="text-sm text-humanis-yellow font-bold mb-2">

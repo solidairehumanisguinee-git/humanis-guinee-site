@@ -47,12 +47,32 @@ export default async function ActualitePage({
       <p className="text-sm text-humanis-yellow font-bold mt-8 mb-2">{formatDate(actu.date)}</p>
       <h1 className="text-4xl font-bold text-humanis-blue mb-8">{actu.titre}</h1>
 
-      {actu.photoUrl && (
+      {actu.photoUrls.length === 1 && (
         <img
-          src={actu.photoUrl}
+          src={actu.photoUrls[0]}
           alt={actu.titre}
           className="w-full rounded-2xl shadow-sm mb-10 max-h-[420px] object-cover"
         />
+      )}
+
+      {actu.photoUrls.length > 1 && (
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-10">
+          {actu.photoUrls.map((url, i) => (
+            <a
+              key={url}
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block rounded-xl overflow-hidden shadow-sm"
+            >
+              <img
+                src={url}
+                alt={`${actu.titre} — photo ${i + 1}`}
+                className="w-full aspect-square object-cover hover:scale-105 transition"
+              />
+            </a>
+          ))}
+        </div>
       )}
 
       <div className="text-gray-700 text-lg whitespace-pre-line leading-relaxed">
