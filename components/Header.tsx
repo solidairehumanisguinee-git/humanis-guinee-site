@@ -4,6 +4,7 @@ import logo from "@/public/logo.png";
 const NAV_LINKS = [
   { href: "/#a-propos", label: "À Propos" },
   { href: "/#actions", label: "Nos Actions" },
+  { href: "/actualites", label: "Actualités" },
   { href: "/#contact", label: "Contact" },
 ];
 
