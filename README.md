@@ -32,8 +32,10 @@ ligne le site automatiquement à chaque envoi (« push ») de code — aucune ma
 mise en ligne n'est nécessaire.
 
 Le nom de domaine `humanisguinee.fr` est réservé chez **OVH**, qui route aussi la messagerie
-(redirections d'emails). Le formulaire de bénévolat est géré via **Airtable**, et les dons via
-**HelloAsso** (lien à finaliser — voir la carte en fin de document).
+(redirections d'emails). Le formulaire de bénévolat et la section **Actualités** (textes, photos,
+vidéos) sont gérés via **Airtable** — un membre de l'association publie une actualité directement
+depuis Airtable, sans toucher au code, et elle apparaît sur le site en quelques minutes. Les dons
+passent par **HelloAsso** (lien à finaliser — voir la carte en fin de document).
 
 > **À retenir** — vous n'avez presque jamais besoin de toucher à Vercel, OVH ou Airtable pour une
 > simple modification de texte ou de design : tout ça se fait en modifiant le code et en le
@@ -50,7 +52,7 @@ demandez-les à l'association par un canal sécurisé (pas par email en clair).
 | GitHub | Code source du site | Dépôt sous `solidairehumanisguinee-git`, avec un compte collaborateur ayant les droits d'écriture | [github.com](https://github.com/solidairehumanisguinee-git/humanis-guinee-site) |
 | Vercel | Hébergement & mise en ligne automatique | Compte relié au dépôt GitHub ci-dessus | [vercel.com](https://vercel.com/dashboard) |
 | OVH | Nom de domaine, zone DNS, redirections email | Compte de l'association | [manager.ovh.com](https://manager.ovh.com) |
-| Airtable | Formulaire « Devenir bénévole » | Compte de l'association | [airtable.com](https://airtable.com) |
+| Airtable | Formulaire « Devenir bénévole » + section Actualités | Compte de l'association — le site utilise un jeton d'accès (voir [§5](#5-lancer-le-site-en-local)) | [airtable.com](https://airtable.com) |
 | HelloAsso | Collecte de dons *(à finaliser)* | Compte de l'association | [helloasso.com](https://www.helloasso.com) |
 | Google Search Console | Suivi de l'indexation Google | Compte Google de l'association | [search.google.com](https://search.google.com/search-console) |
 | Google Business Profile | Fiche établissement (résultats de recherche) | Compte Google de l'association | [business.google.com](https://business.google.com) |
@@ -98,13 +100,23 @@ Pour voir et tester une modification avant de la publier. Ouvrez le terminal int
    ```bash
    npm install
    ```
-2. **Démarrer le serveur de développement** :
+2. **Configurer la clé Airtable** (une seule fois, nécessaire pour que la page Actualités
+   affiche du contenu) — copiez `.env.local.example` en `.env.local`, puis renseignez :
+   ```
+   AIRTABLE_API_KEY=votre_token
+   ```
+   Ce jeton se crée sur [airtable.com/create/tokens](https://airtable.com/create/tokens) (scope
+   `data.records:read`, accès donné à la base du projet). `.env.local` n'est jamais envoyé sur
+   GitHub (voir `.gitignore`) — la même variable doit aussi être définie sur **Vercel**
+   (*Settings → Environment Variables*) pour que le site en ligne fonctionne. Sans cette clé,
+   le site tourne normalement mais la page Actualités reste vide.
+3. **Démarrer le serveur de développement** :
    ```bash
    npm run dev
    ```
    Ouvrez ensuite [localhost:3000](http://localhost:3000) dans un navigateur — le site se
    recharge automatiquement à chaque modification enregistrée.
-3. **Vérifier avant de publier** (recommandé) :
+4. **Vérifier avant de publier** (recommandé) :
    ```bash
    npm run build
    ```
@@ -139,7 +151,8 @@ Le site se met à jour automatiquement — il n'y a rien à faire côté Vercel.
 | Besoin | Où aller |
 |---|---|
 | Changer le texte, les couleurs, une page | Code du site (dossier `app/`) → GitHub → Vercel republie seul |
-| Répondre aux candidatures bénévoles | [Base Airtable](https://airtable.com) |
+| Publier une actualité (texte, photo, vidéo) | Table **Actualités** dans la [base Airtable](https://airtable.com) — cocher « Publié » pour la rendre visible |
+| Répondre aux candidatures bénévoles | [Base Airtable](https://airtable.com), table Bénévoles |
 | Suivre / activer les dons | [Espace HelloAsso](https://www.helloasso.com) |
 | Modifier le domaine ou les emails | [Manager OVH](https://manager.ovh.com) → Zone DNS / Emails |
 | Voir qui visite le site, forcer une réindexation | [Google Search Console](https://search.google.com/search-console) |
@@ -153,6 +166,7 @@ Pour approfondir un point sans dépendre de ce document, qui restera volontairem
 - **Commit / Push** — « commit » enregistre un instantané du code ; « push » l'envoie sur GitHub. [git-scm.com/doc](https://git-scm.com/doc)
 - **Déploiement** — la mise en ligne d'une nouvelle version du site par Vercel. [vercel.com/docs](https://vercel.com/docs/deployments)
 - **Zone DNS** — le réglage qui relie le nom de domaine (`humanisguinee.fr`) au serveur qui héberge le site. [docs.ovh.com](https://docs.ovh.com/fr/domains/)
+- **Variable d'environnement** — une valeur secrète (comme la clé Airtable) gardée hors du code, définie localement dans `.env.local` et sur Vercel. [vercel.com/docs](https://vercel.com/docs/environment-variables)
 - **Next.js** — le framework utilisé pour construire le site. [nextjs.org/docs](https://nextjs.org/docs)
 
 ---

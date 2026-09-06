@@ -375,9 +375,12 @@
       </p>
       <p>
         Le nom de domaine <code>humanisguinee.fr</code> est réservé chez <strong>OVH</strong>, qui
-        route aussi la messagerie (redirections d'emails). Le formulaire de bénévolat est géré via
-        <strong> Airtable</strong>, et les dons via <strong>HelloAsso</strong> (lien à finaliser —
-        voir la carte en fin de document).
+        route aussi la messagerie (redirections d'emails). Le formulaire de bénévolat et la
+        section <strong>Actualités</strong> (textes, photos, vidéos) sont gérés via
+        <strong> Airtable</strong> — un membre de l'association publie une actualité directement
+        depuis Airtable, sans toucher au code, et elle apparaît sur le site en quelques minutes.
+        Les dons passent par <strong>HelloAsso</strong> (lien à finaliser — voir la carte en fin
+        de document).
       </p>
 
       <div class="callout">
@@ -422,8 +425,8 @@
             </tr>
             <tr>
               <td class="svc">Airtable</td>
-              <td>Formulaire « Devenir bénévole »</td>
-              <td>Compte de l'association</td>
+              <td>Formulaire « Devenir bénévole » + section Actualités</td>
+              <td>Compte de l'association — le site utilise un jeton d'accès (voir section 5)</td>
               <td><a href="https://airtable.com" target="_blank" rel="noopener noreferrer">airtable.com</a></td>
             </tr>
             <tr>
@@ -523,6 +526,18 @@
           <div class="terminal"><div class="p">npm install</div></div>
         </li>
         <li>
+          <strong>Configurer la clé Airtable</strong>
+          <p>Une seule fois — nécessaire pour que la page Actualités affiche du contenu. Copiez
+            <code>.env.local.example</code> en <code>.env.local</code>, puis renseignez :</p>
+          <div class="terminal"><div class="p">AIRTABLE_API_KEY=votre_token</div></div>
+          <p>Ce jeton se crée sur <a href="https://airtable.com/create/tokens" target="_blank" rel="noopener noreferrer">airtable.com/create/tokens</a>
+            (scope <code>data.records:read</code>, accès donné à la base du projet).
+            <code>.env.local</code> n'est jamais envoyé sur GitHub — la même variable doit aussi
+            être définie sur <strong>Vercel</strong> (<em>Settings → Environment Variables</em>)
+            pour que le site en ligne fonctionne. Sans cette clé, le site tourne normalement mais
+            la page Actualités reste vide.</p>
+        </li>
+        <li>
           <strong>Démarrer le serveur de développement</strong>
           <div class="terminal"><div class="p">npm run dev</div></div>
           <p>Ouvrez ensuite <a href="http://localhost:3000" target="_blank" rel="noopener noreferrer">localhost:3000</a> dans un navigateur — le site se recharge automatiquement à chaque modification enregistrée.</p>
@@ -580,7 +595,8 @@
 
       <div class="maproll">
         <div class="mapcard"><div class="q">Changer le texte, les couleurs, une page</div><div class="a">Code du site (dossier <code>app/</code>) → GitHub → Vercel republie seul</div></div>
-        <div class="mapcard"><div class="q">Répondre aux candidatures bénévoles</div><div class="a"><a href="https://airtable.com" target="_blank" rel="noopener noreferrer">Base Airtable</a></div></div>
+        <div class="mapcard"><div class="q">Publier une actualité (texte, photo, vidéo)</div><div class="a">Table <strong>Actualités</strong> dans <a href="https://airtable.com" target="_blank" rel="noopener noreferrer">Airtable</a> — cocher « Publié »</div></div>
+        <div class="mapcard"><div class="q">Répondre aux candidatures bénévoles</div><div class="a"><a href="https://airtable.com" target="_blank" rel="noopener noreferrer">Base Airtable</a>, table Bénévoles</div></div>
         <div class="mapcard"><div class="q">Suivre / activer les dons</div><div class="a"><a href="https://www.helloasso.com" target="_blank" rel="noopener noreferrer">Espace HelloAsso</a></div></div>
         <div class="mapcard"><div class="q">Modifier le domaine ou les emails</div><div class="a"><a href="https://manager.ovh.com" target="_blank" rel="noopener noreferrer">Manager OVH</a> → Zone DNS / Emails</div></div>
         <div class="mapcard"><div class="q">Voir qui visite le site, forcer une réindexation</div><div class="a"><a href="https://search.google.com/search-console" target="_blank" rel="noopener noreferrer">Google Search Console</a></div></div>
@@ -598,6 +614,7 @@
         <div class="gterm"><dt>Commit / Push</dt><dd>« Commit » enregistre un instantané du code ; « push » l'envoie sur GitHub. <a href="https://git-scm.com/doc" target="_blank" rel="noopener noreferrer">git-scm.com/doc</a></dd></div>
         <div class="gterm"><dt>Déploiement</dt><dd>La mise en ligne d'une nouvelle version du site par Vercel. <a href="https://vercel.com/docs/deployments" target="_blank" rel="noopener noreferrer">vercel.com/docs</a></dd></div>
         <div class="gterm"><dt>Zone DNS</dt><dd>Le réglage qui relie le nom de domaine (humanisguinee.fr) au serveur qui héberge le site. <a href="https://docs.ovh.com/fr/domains/" target="_blank" rel="noopener noreferrer">docs.ovh.com</a></dd></div>
+        <div class="gterm"><dt>Variable d'environnement</dt><dd>Une valeur secrète (comme la clé Airtable) gardée hors du code, définie dans <code>.env.local</code> et sur Vercel. <a href="https://vercel.com/docs/environment-variables" target="_blank" rel="noopener noreferrer">vercel.com/docs</a></dd></div>
         <div class="gterm"><dt>Next.js</dt><dd>Le framework utilisé pour construire le site. <a href="https://nextjs.org/docs" target="_blank" rel="noopener noreferrer">nextjs.org/docs</a></dd></div>
       </dl>
     </section>
