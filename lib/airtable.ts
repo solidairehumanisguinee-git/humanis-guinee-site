@@ -1,13 +1,15 @@
+export type Media = { url: string; isVideo: boolean };
+
 export type Actualite = {
   id: string;
   titre: string;
   date: string | null;
   resume: string;
   contenu: string;
-  photoUrls: string[];
+  medias: Media[];
 };
 
-type AirtableAttachment = { url: string };
+type AirtableAttachment = { url: string; type?: string };
 
 type AirtableRecord = {
   id: string;
@@ -35,7 +37,11 @@ function recordToActualite(record: AirtableRecord): Actualite {
     date: record.fields.Date ?? null,
     resume: record.fields.Résumé ?? "",
     contenu: record.fields.Contenu ?? "",
-    photoUrls: record.fields.Photo?.map((p) => p.url) ?? [],
+    medias:
+      record.fields.Photo?.map((p) => ({
+        url: p.url,
+        isVideo: p.type?.startsWith("video/") ?? false,
+      })) ?? [],
   };
 }
 

@@ -37,20 +37,36 @@ export default async function Actualites() {
               href={`/actualites/${actu.id}`}
               className="bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-lg transition flex flex-col"
             >
-              {actu.photoUrls.length > 0 && (
-                <div className="relative">
-                  <img
-                    src={actu.photoUrls[0]}
-                    alt={actu.titre}
-                    className="w-full h-48 object-cover"
-                  />
-                  {actu.photoUrls.length > 1 && (
-                    <span className="absolute bottom-2 right-2 bg-black/60 text-white text-xs font-bold px-2 py-1 rounded-full">
-                      +{actu.photoUrls.length - 1} photo{actu.photoUrls.length > 2 ? "s" : ""}
-                    </span>
-                  )}
-                </div>
-              )}
+              {actu.medias.length > 0 && (() => {
+                const thumb = actu.medias.find((m) => !m.isVideo) ?? actu.medias[0];
+                const rest = actu.medias.length - 1;
+                return (
+                  <div className="relative">
+                    {thumb.isVideo ? (
+                      <video
+                        src={thumb.url}
+                        muted
+                        preload="metadata"
+                        className="w-full h-48 object-cover"
+                      />
+                    ) : (
+                      <img src={thumb.url} alt={actu.titre} className="w-full h-48 object-cover" />
+                    )}
+                    {thumb.isVideo && (
+                      <span className="absolute inset-0 flex items-center justify-center">
+                        <span className="w-12 h-12 rounded-full bg-black/50 flex items-center justify-center text-white text-xl">
+                          ▶
+                        </span>
+                      </span>
+                    )}
+                    {rest > 0 && (
+                      <span className="absolute bottom-2 right-2 bg-black/60 text-white text-xs font-bold px-2 py-1 rounded-full">
+                        +{rest}
+                      </span>
+                    )}
+                  </div>
+                );
+              })()}
               <div className="p-6 flex flex-col flex-1">
                 <p className="text-sm text-humanis-yellow font-bold mb-2">
                   {formatDate(actu.date)}
