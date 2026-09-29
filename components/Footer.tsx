@@ -1,16 +1,19 @@
 import Image from "next/image";
 import Link from "next/link";
+import { getContenu } from "@/lib/contenu";
 import logo from "@/public/logo.png";
 
-export default function Footer() {
+export default async function Footer() {
+  const c = await getContenu();
+
   return (
     <footer className="bg-humanis-blue text-white text-center py-10">
       <span className="relative w-32 h-20 rounded-xl bg-white p-2 inline-block mb-4">
         <Image src={logo} alt="Humanis Guinée Solidarité" fill className="object-contain p-1" />
       </span>
       <p className="mb-2">
-        <a href="mailto:contact@humanisguinee.fr" className="hover:underline">
-          contact@humanisguinee.fr
+        <a href={`mailto:${c["contact.email"]}`} className="hover:underline">
+          {c["contact.email"]}
         </a>
       </p>
       <p className="text-humanis-yellow font-bold text-lg">

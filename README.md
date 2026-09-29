@@ -17,8 +17,9 @@ Site de l'association [Humanis Guinée Solidarité](https://www.humanisguinee.fr
 4. [Connecter Git à GitHub](#4-connecter-git-à-github)
 5. [Lancer le site en local](#5-lancer-le-site-en-local)
 6. [Publier une modification](#6-publier-une-modification)
-7. [Où changer quoi](#7-où-changer-quoi)
-8. [Glossaire & documentation officielle](#8-glossaire--documentation-officielle)
+7. [Console d'administration](#7-console-dadministration)
+8. [Où changer quoi](#8-où-changer-quoi)
+9. [Glossaire & documentation officielle](#9-glossaire--documentation-officielle)
 
 ## 1. Aperçu du projet
 
@@ -32,14 +33,15 @@ ligne le site automatiquement à chaque envoi (« push ») de code — aucune ma
 mise en ligne n'est nécessaire.
 
 Le nom de domaine `humanisguinee.fr` est réservé chez **OVH**, qui route aussi la messagerie
-(redirections d'emails). Le formulaire de bénévolat et la section **Actualités** (textes, photos,
-vidéos) sont gérés via **Airtable** — un membre de l'association publie une actualité directement
-depuis Airtable, sans toucher au code, et elle apparaît sur le site en quelques minutes. Les dons
+(redirections d'emails). Les textes et photos de la page d'accueil, la section **Actualités** et
+les candidatures bénévoles sont stockés dans **Airtable**, et se gèrent sans toucher au code depuis
+la **console d'administration** du site ([`/admin`](https://www.humanisguinee.fr/admin), voir
+[§7](#7-console-dadministration)) : les modifications sont en ligne immédiatement. Les dons
 passent par **HelloAsso** ([formulaire de don](https://www.helloasso.com/associations/humanis-guinee-solidarite/formulaires/1)).
 
-> **À retenir** — vous n'avez presque jamais besoin de toucher à Vercel, OVH ou Airtable pour une
-> simple modification de texte ou de design : tout ça se fait en modifiant le code et en le
-> publiant sur GitHub (section 6). Les autres services ne sont à ouvrir que pour des changements
+> **À retenir** — une modification de texte, de lien ou de photo de la page d'accueil se fait
+> depuis la console `/admin`, sans code. Le design et les nouvelles pages, eux, se font en modifiant
+> le code et en le publiant sur GitHub (section 6). Les autres services ne sont à ouvrir que pour des changements
 > qui les concernent directement (domaine, formulaire, dons...).
 
 ## 2. Comptes & accès
@@ -105,8 +107,10 @@ Pour voir et tester une modification avant de la publier. Ouvrez le terminal int
    ```
    AIRTABLE_API_KEY=votre_token
    ```
-   Ce jeton se crée sur [airtable.com/create/tokens](https://airtable.com/create/tokens) (scope
-   `data.records:read`, accès donné à la base du projet). `.env.local` n'est jamais envoyé sur
+   Ce jeton se crée sur [airtable.com/create/tokens](https://airtable.com/create/tokens) (scopes
+   `data.records:read` **et** `data.records:write`, accès donné à la base du projet — l'écriture
+   sert à la console d'administration). Pour tester la console en local, ajoutez aussi
+   `ADMIN_PASSWORD` et `ADMIN_SECRET` (voir [§7](#7-console-dadministration)). `.env.local` n'est jamais envoyé sur
    GitHub (voir `.gitignore`) — la même variable doit aussi être définie sur **Vercel**
    (*Settings → Environment Variables*) pour que le site en ligne fonctionne. Sans cette clé,
    le site tourne normalement mais la page Actualités reste vide.
@@ -146,19 +150,58 @@ Le site se met à jour automatiquement — il n'y a rien à faire côté Vercel.
 > la séance. Ce n'est pas automatique dans un usage classique de VS Code : sans cet outil, il
 > faut committer et pousser vous-même en suivant les étapes ci-dessus.
 
-## 7. Où changer quoi
+## 7. Console d'administration
+
+La console [`humanisguinee.fr/admin`](https://www.humanisguinee.fr/admin) permet aux membres de
+l'association de gérer le site sans coder. Elle est protégée par **un mot de passe partagé** ;
+la connexion reste active 7 jours sur l'appareil.
+
+| Onglet | Ce qu'on peut faire |
+|---|---|
+| Textes & photos | Modifier les textes, liens (HelloAsso, réseaux sociaux, formulaire bénévole) et photos de la page d'accueil. Vider un champ rétablit le texte d'origine. |
+| Actualités | Créer, modifier, publier/dépublier et supprimer une actualité, avec photos et vidéos (photos réduites automatiquement, vidéos 4 Mo max). |
+| Bénévoles | Lire les candidatures reçues via le formulaire (lecture seule). |
+
+**Mise en place (une seule fois)**
+
+1. **Airtable — table « Contenu »** : dans la base du projet, créez une table nommée exactement
+   `Contenu` avec trois colonnes :
+   - `Clé` — texte sur une ligne (colonne principale) ;
+   - `Valeur` — texte long ;
+   - `Image` — pièce jointe.
+
+   Laissez-la vide : la console crée les lignes toute seule à la première modification. Tant
+   qu'une ligne n'existe pas, le site affiche le texte d'origine (défini dans `lib/contenu.ts`).
+2. **Airtable — jeton** : le jeton `AIRTABLE_API_KEY` doit avoir les scopes `data.records:read`
+   et `data.records:write` (voir [§5](#5-lancer-le-site-en-local)).
+3. **Vercel — variables d'environnement** (*Settings → Environment Variables*) :
+   - `ADMIN_PASSWORD` — le mot de passe de la console, à transmettre aux membres par un canal sûr ;
+   - `ADMIN_SECRET` — une longue chaîne aléatoire, jamais communiquée (sert à signer les
+     connexions). Par exemple, générée avec `node -e "console.log(crypto.randomUUID()+crypto.randomUUID())"`.
+
+   Puis redéployez (*Deployments → ⋯ → Redeploy*) pour qu'elles soient prises en compte.
+
+> **Changer le mot de passe** — modifiez `ADMIN_PASSWORD` sur Vercel puis redéployez : tous les
+> appareils connectés sont déconnectés.
+
+> **Côté code** — les champs modifiables et leurs textes d'origine sont listés dans
+> `lib/contenu.ts` ; la console est dans `app/admin/`. Pour rendre un nouveau texte modifiable,
+> ajoutez un champ dans `lib/contenu.ts` et affichez-le dans `app/(site)/page.tsx`.
+
+## 8. Où changer quoi
 
 | Besoin | Où aller |
 |---|---|
-| Changer le texte, les couleurs, une page | Code du site (dossier `app/`) → GitHub → Vercel republie seul |
-| Publier une actualité (texte, photo, vidéo) | Table **Actualités** dans la [base Airtable](https://airtable.com) — cocher « Publié » pour la rendre visible |
-| Répondre aux candidatures bénévoles | [Base Airtable](https://airtable.com), table Bénévoles |
+| Changer un texte, un lien ou une photo de la page d'accueil | [Console `/admin`](https://www.humanisguinee.fr/admin) → Textes & photos |
+| Publier une actualité (texte, photo, vidéo) | [Console `/admin`](https://www.humanisguinee.fr/admin) → Actualités — cocher « Publier sur le site » |
+| Lire les candidatures bénévoles | [Console `/admin`](https://www.humanisguinee.fr/admin) → Bénévoles (ou la table Bénévoles dans [Airtable](https://airtable.com)) |
+| Changer le design, les couleurs, ajouter une page | Code du site (dossier `app/`) → GitHub → Vercel republie seul |
 | Suivre / activer les dons | [Espace HelloAsso](https://www.helloasso.com) |
 | Modifier le domaine ou les emails | [Manager OVH](https://manager.ovh.com) → Zone DNS / Emails |
 | Voir qui visite le site, forcer une réindexation | [Google Search Console](https://search.google.com/search-console) |
 | Mettre à jour la fiche Google (horaires, photos) | [Google Business Profile](https://business.google.com) |
 
-## 8. Glossaire & documentation officielle
+## 9. Glossaire & documentation officielle
 
 Pour approfondir un point sans dépendre de ce document, qui restera volontairement bref.
 
