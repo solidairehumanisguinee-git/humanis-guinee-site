@@ -9,7 +9,7 @@ export default async function Benevoles() {
   try {
     candidatures = await getCandidatures();
   } catch (error) {
-    return <ErreurChargement quoi="les candidatures (table « Bénévoles »)" detail={String(error)} />;
+    return <ErreurChargement quoi="les candidatures bénévoles" detail={String(error)} />;
   }
 
   return (

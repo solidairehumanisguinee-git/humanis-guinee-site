@@ -1,6 +1,8 @@
 import { listRecords } from "@/lib/airtable";
 
-export const TABLE_BENEVOLES = "Bénévoles";
+// Table qui reçoit les réponses du formulaire « Devenir bénévole ». On utilise son identifiant
+// plutôt que son nom : il reste valable même si la table est renommée dans Airtable.
+export const TABLE_BENEVOLES = "tblv7azUquHJO2vLP";
 
 export type Valeur = string | { url: string; nom: string }[];
 
