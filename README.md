@@ -35,7 +35,7 @@ Le nom de domaine `humanisguinee.fr` est réservé chez **OVH**, qui route aussi
 (redirections d'emails). Le formulaire de bénévolat et la section **Actualités** (textes, photos,
 vidéos) sont gérés via **Airtable** — un membre de l'association publie une actualité directement
 depuis Airtable, sans toucher au code, et elle apparaît sur le site en quelques minutes. Les dons
-passent par **HelloAsso** (lien à finaliser — voir la carte en fin de document).
+passent par **HelloAsso** ([formulaire de don](https://www.helloasso.com/associations/humanis-guinee-solidarite/formulaires/1)).
 
 > **À retenir** — vous n'avez presque jamais besoin de toucher à Vercel, OVH ou Airtable pour une
 > simple modification de texte ou de design : tout ça se fait en modifiant le code et en le
@@ -53,7 +53,7 @@ demandez-les à l'association par un canal sécurisé (pas par email en clair).
 | Vercel | Hébergement & mise en ligne automatique | Compte relié au dépôt GitHub ci-dessus | [vercel.com](https://vercel.com/dashboard) |
 | OVH | Nom de domaine, zone DNS, redirections email | Compte de l'association | [manager.ovh.com](https://manager.ovh.com) |
 | Airtable | Formulaire « Devenir bénévole » + section Actualités | Compte de l'association — le site utilise un jeton d'accès (voir [§5](#5-lancer-le-site-en-local)) | [airtable.com](https://airtable.com) |
-| HelloAsso | Collecte de dons *(à finaliser)* | Compte de l'association | [helloasso.com](https://www.helloasso.com) |
+| HelloAsso | Collecte de dons ([formulaire](https://www.helloasso.com/associations/humanis-guinee-solidarite/formulaires/1)) | Compte de l'association | [helloasso.com](https://www.helloasso.com) |
 | Google Search Console | Suivi de l'indexation Google | Compte Google de l'association | [search.google.com](https://search.google.com/search-console) |
 | Google Business Profile | Fiche établissement (résultats de recherche) | Compte Google de l'association | [business.google.com](https://business.google.com) |
 

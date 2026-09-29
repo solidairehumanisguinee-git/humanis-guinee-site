@@ -112,9 +112,8 @@ export default function Home() {
               </p>
             </div>
           </div>
-          {/* TODO: remplacer par votre lien de collecte HelloAsso */}
           <a
-            href="#"
+            href="https://www.helloasso.com/associations/humanis-guinee-solidarite/formulaires/1"
             target="_blank"
             rel="noopener noreferrer"
             className="bg-humanis-red text-white font-bold py-4 px-12 rounded-full text-xl shadow-lg transition-transform hover:scale-105 inline-block"
