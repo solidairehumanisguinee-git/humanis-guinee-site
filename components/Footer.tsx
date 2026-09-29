@@ -30,6 +30,10 @@ export default async function Footer() {
         <Link href="/politique-de-confidentialite" className="hover:underline hover:text-white">
           Politique de confidentialité
         </Link>
+        <span>·</span>
+        <Link href="/admin" prefetch={false} rel="nofollow" className="hover:underline hover:text-white">
+          Administration
+        </Link>
       </p>
     </footer>
   );
