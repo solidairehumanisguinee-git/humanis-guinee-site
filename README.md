@@ -153,8 +153,9 @@ Le site se met à jour automatiquement — il n'y a rien à faire côté Vercel.
 ## 7. Console d'administration
 
 La console [`humanisguinee.fr/admin`](https://www.humanisguinee.fr/admin) permet aux membres de
-l'association de gérer le site sans coder. Elle est protégée par **un mot de passe partagé** ;
-la connexion reste active 7 jours sur l'appareil.
+l'association de gérer le site sans coder. On y accède aussi par le lien **« Administration »**
+en bas de chaque page du site. Elle est protégée par **un mot de passe partagé** ; la connexion
+reste active 7 jours sur l'appareil.
 
 | Onglet | Ce qu'on peut faire |
 |---|---|
@@ -184,9 +185,28 @@ la connexion reste active 7 jours sur l'appareil.
 > **Changer le mot de passe** — modifiez `ADMIN_PASSWORD` sur Vercel puis redéployez : tous les
 > appareils connectés sont déconnectés.
 
+> **Vidéos de plus de 4 Mo** — la console ne peut pas les envoyer (limite de Vercel). Ajoutez-les
+> directement dans la colonne `Photo` de la table Actualités sur Airtable : elles s'affichent sur
+> le site comme les autres.
+
+> **Onglet Bénévoles** — il lit la table qui reçoit les réponses du formulaire, désignée par son
+> identifiant Airtable `tblv7azUquHJO2vLP` (dans `lib/benevoles.ts`) plutôt que par son nom : la
+> table peut donc être renommée sans rien casser. Si le formulaire est un jour recréé dans une
+> autre table, remplacez cet identifiant (visible dans l'adresse de la table : `…/tblXXXX/…`).
+
+> **Photos et URL `/media/...`** — Airtable fournit des liens de fichiers qui expirent au bout de
+> 2 heures. Le site affiche donc des adresses stables `/media/...` qui redirigent vers un lien
+> Airtable frais (`app/media/`). Seules les tables Actualités (actualités publiées) et Contenu
+> sont exposées ainsi, jamais les candidatures.
+
 > **Côté code** — les champs modifiables et leurs textes d'origine sont listés dans
 > `lib/contenu.ts` ; la console est dans `app/admin/`. Pour rendre un nouveau texte modifiable,
 > ajoutez un champ dans `lib/contenu.ts` et affichez-le dans `app/(site)/page.tsx`.
+
+> **Si `/admin` renvoie une erreur 404 sur le site en ligne** alors que le déploiement Vercel est
+> réussi : le domaine est resté bloqué sur une ancienne version (souvent après un *Instant
+> Rollback*). Sur Vercel, onglet *Deployments* → dernier déploiement → *⋯* → *Promote to
+> Production*, puis vérifiez que les déploiements de production automatiques sont réactivés.
 
 ## 8. Où changer quoi
 

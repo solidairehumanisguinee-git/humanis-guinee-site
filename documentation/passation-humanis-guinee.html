@@ -349,6 +349,7 @@
       <li><a href="#github">Connecter Git à GitHub</a></li>
       <li><a href="#projet">Lancer le site en local</a></li>
       <li><a href="#publier">Publier une modification</a></li>
+      <li><a href="#console">Console d'administration</a></li>
       <li><a href="#carte">Où changer quoi</a></li>
       <li><a href="#glossaire">Glossaire &amp; liens</a></li>
     </ol>
@@ -375,19 +376,20 @@
       </p>
       <p>
         Le nom de domaine <code>humanisguinee.fr</code> est réservé chez <strong>OVH</strong>, qui
-        route aussi la messagerie (redirections d'emails). Le formulaire de bénévolat et la
-        section <strong>Actualités</strong> (textes, photos, vidéos) sont gérés via
-        <strong> Airtable</strong> — un membre de l'association publie une actualité directement
-        depuis Airtable, sans toucher au code, et elle apparaît sur le site en quelques minutes.
+        route aussi la messagerie (redirections d'emails). Les textes et photos de la page d'accueil,
+        la section <strong>Actualités</strong> et les candidatures bénévoles sont stockés dans
+        <strong>Airtable</strong>, et se gèrent sans toucher au code depuis la
+        <strong>console d'administration</strong> du site (<a href="https://www.humanisguinee.fr/admin" target="_blank" rel="noopener noreferrer">console <code>/admin</code></a>, voir section 7) : les
+        modifications sont en ligne immédiatement.
         Les dons passent par <strong>HelloAsso</strong> (<a href="https://www.helloasso.com/associations/humanis-guinee-solidarite/formulaires/1" target="_blank" rel="noopener noreferrer">formulaire de don</a>).
       </p>
 
       <div class="callout">
         <span class="label">À retenir</span>
         <p>
-          Vous n'avez presque jamais besoin de toucher à Vercel, OVH ou Airtable pour une simple
-          modification de texte ou de design — tout ça se fait en modifiant le code et en le
-          publiant sur GitHub (section 6). Les autres services ne sont à ouvrir que pour des
+          Une modification de texte, de lien ou de photo de la page d'accueil se fait depuis la
+          console <code>/admin</code>, sans code. Le design et les nouvelles pages, eux, se font en
+          modifiant le code et en le publiant sur GitHub (section 6). Les autres services ne sont à ouvrir que pour des
           changements qui les concernent directement (domaine, formulaire, dons...).
         </p>
       </div>
@@ -424,7 +426,7 @@
             </tr>
             <tr>
               <td class="svc">Airtable</td>
-              <td>Formulaire « Devenir bénévole » + section Actualités</td>
+              <td>Formulaire « Devenir bénévole », Actualités et textes du site (via la console <code>/admin</code>)</td>
               <td>Compte de l'association — le site utilise un jeton d'accès (voir section 5)</td>
               <td><a href="https://airtable.com" target="_blank" rel="noopener noreferrer">airtable.com</a></td>
             </tr>
@@ -530,7 +532,10 @@
             <code>.env.local.example</code> en <code>.env.local</code>, puis renseignez :</p>
           <div class="terminal"><div class="p">AIRTABLE_API_KEY=votre_token</div></div>
           <p>Ce jeton se crée sur <a href="https://airtable.com/create/tokens" target="_blank" rel="noopener noreferrer">airtable.com/create/tokens</a>
-            (scope <code>data.records:read</code>, accès donné à la base du projet).
+            (scopes <code>data.records:read</code> <strong>et</strong> <code>data.records:write</code>,
+            accès donné à la base du projet — l'écriture sert à la console d'administration).
+            Pour tester la console en local, ajoutez aussi <code>ADMIN_PASSWORD</code> et
+            <code>ADMIN_SECRET</code> (voir section 7).
             <code>.env.local</code> n'est jamais envoyé sur GitHub — la même variable doit aussi
             être définie sur <strong>Vercel</strong> (<em>Settings → Environment Variables</em>)
             pour que le site en ligne fonctionne. Sans cette clé, le site tourne normalement mais
@@ -587,15 +592,82 @@
       </div>
     </section>
 
+    <section id="console">
+      <div class="kicker">07 — Console d'administration</div>
+      <h2>Gérer le site sans coder</h2>
+      <p class="dek">La <a href="https://www.humanisguinee.fr/admin" target="_blank" rel="noopener noreferrer">console <code>/admin</code></a> permet aux membres de l'association de modifier le site eux-mêmes. On y accède aussi par le lien « Administration » en bas de chaque page. Elle est protégée par un mot de passe partagé ; la connexion reste active 7 jours sur l'appareil.</p>
+
+      <div class="table-wrap">
+        <table class="data">
+          <thead>
+            <tr><th>Onglet</th><th>Ce qu'on peut faire</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="svc">Textes &amp; photos</td>
+              <td>Modifier les textes, les liens (HelloAsso, réseaux sociaux, formulaire bénévole) et les photos de la page d'accueil. Vider un champ rétablit le texte d'origine.</td>
+            </tr>
+            <tr>
+              <td class="svc">Actualités</td>
+              <td>Créer, modifier, publier/dépublier et supprimer une actualité, avec photos et vidéos (photos réduites automatiquement, vidéos 4 Mo max).</td>
+            </tr>
+            <tr>
+              <td class="svc">Bénévoles</td>
+              <td>Lire les candidatures reçues via le formulaire (lecture seule).</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Mise en place (une seule fois)</h3>
+      <ol class="steps">
+        <li>
+          <strong>Airtable — table « Contenu »</strong>
+          <p>Dans la base du projet, une table nommée exactement <code>Contenu</code> avec trois colonnes :
+            <code>Clé</code> (texte sur une ligne, colonne principale), <code>Valeur</code> (texte long) et
+            <code>Image</code> (pièce jointe). Elle peut rester vide : la console crée les lignes toute seule.
+            Tant qu'une ligne n'existe pas, le site affiche le texte d'origine (défini dans <code>lib/contenu.ts</code>).</p>
+        </li>
+        <li>
+          <strong>Airtable — jeton</strong>
+          <p>Le jeton <code>AIRTABLE_API_KEY</code> doit avoir les scopes <code>data.records:read</code> et
+            <code>data.records:write</code> (voir section 5).</p>
+        </li>
+        <li>
+          <strong>Vercel — variables d'environnement</strong>
+          <p>Dans <em>Settings → Environment Variables</em> : <code>ADMIN_PASSWORD</code> (le mot de passe de la
+            console, à transmettre aux membres par un canal sûr) et <code>ADMIN_SECRET</code> (une longue chaîne
+            aléatoire, jamais communiquée, qui signe les connexions). Pour générer cette chaîne :</p>
+          <div class="terminal"><div class="p">node -e <span class="c">"console.log(crypto.randomUUID()+crypto.randomUUID())"</span></div></div>
+          <p>Puis redéployez (<em>Deployments → ⋯ → Redeploy</em>) pour qu'elles soient prises en compte.</p>
+        </li>
+      </ol>
+
+      <div class="callout">
+        <span class="label">Bon à savoir</span>
+        <p><strong>Changer le mot de passe</strong> — modifiez <code>ADMIN_PASSWORD</code> sur Vercel puis redéployez : tous les appareils connectés sont déconnectés.</p>
+        <p><strong>Vidéos de plus de 4 Mo</strong> — la console ne peut pas les envoyer (limite de Vercel). Ajoutez-les directement dans la colonne <code>Photo</code> de la table Actualités sur Airtable.</p>
+        <p><strong>Onglet Bénévoles</strong> — il lit la table du formulaire par son identifiant Airtable <code>tblv7azUquHJO2vLP</code> (dans <code>lib/benevoles.ts</code>) : la table peut être renommée sans rien casser. Si le formulaire est recréé dans une autre table, remplacez cet identifiant (visible dans l'adresse de la table : <code>…/tblXXXX/…</code>).</p>
+        <p><strong>Photos et adresses <code>/media/...</code></strong> — les liens de fichiers Airtable expirent au bout de 2 heures ; le site affiche donc des adresses stables <code>/media/...</code> qui redirigent vers un lien frais (<code>app/media/</code>). Seules les actualités publiées et la table Contenu sont exposées ainsi, jamais les candidatures.</p>
+        <p><strong>Côté code</strong> — les champs modifiables sont listés dans <code>lib/contenu.ts</code> ; la console est dans <code>app/admin/</code>. Pour rendre un nouveau texte modifiable, ajoutez un champ dans <code>lib/contenu.ts</code> et affichez-le dans <code>app/(site)/page.tsx</code>.</p>
+      </div>
+
+      <div class="callout warn">
+        <span class="label">Si /admin renvoie une erreur 404</span>
+        <p>Alors que le déploiement Vercel est réussi : le domaine est resté bloqué sur une ancienne version (souvent après un <em>Instant Rollback</em>). Sur Vercel, onglet <em>Deployments</em> → dernier déploiement → <em>⋯</em> → <em>Promote to Production</em>, puis vérifiez que les déploiements de production automatiques sont réactivés.</p>
+      </div>
+    </section>
+
     <section id="carte">
-      <div class="kicker">07 — Repères</div>
+      <div class="kicker">08 — Repères</div>
       <h2>Où changer quoi</h2>
       <p class="dek">Pour retrouver rapidement le bon endroit selon le besoin.</p>
 
       <div class="maproll">
-        <div class="mapcard"><div class="q">Changer le texte, les couleurs, une page</div><div class="a">Code du site (dossier <code>app/</code>) → GitHub → Vercel republie seul</div></div>
-        <div class="mapcard"><div class="q">Publier une actualité (texte, photo, vidéo)</div><div class="a">Table <strong>Actualités</strong> dans <a href="https://airtable.com" target="_blank" rel="noopener noreferrer">Airtable</a> — cocher « Publié »</div></div>
-        <div class="mapcard"><div class="q">Répondre aux candidatures bénévoles</div><div class="a"><a href="https://airtable.com" target="_blank" rel="noopener noreferrer">Base Airtable</a>, table Bénévoles</div></div>
+        <div class="mapcard"><div class="q">Changer un texte, un lien ou une photo de la page d'accueil</div><div class="a"><a href="https://www.humanisguinee.fr/admin" target="_blank" rel="noopener noreferrer">Console /admin</a> → Textes &amp; photos</div></div>
+        <div class="mapcard"><div class="q">Publier une actualité (texte, photo, vidéo)</div><div class="a"><a href="https://www.humanisguinee.fr/admin" target="_blank" rel="noopener noreferrer">Console /admin</a> → Actualités — cocher « Publier sur le site »</div></div>
+        <div class="mapcard"><div class="q">Lire les candidatures bénévoles</div><div class="a"><a href="https://www.humanisguinee.fr/admin" target="_blank" rel="noopener noreferrer">Console /admin</a> → Bénévoles</div></div>
+        <div class="mapcard"><div class="q">Changer le design, les couleurs, ajouter une page</div><div class="a">Code du site (dossier <code>app/</code>) → GitHub → Vercel republie seul</div></div>
         <div class="mapcard"><div class="q">Suivre / activer les dons</div><div class="a"><a href="https://www.helloasso.com" target="_blank" rel="noopener noreferrer">Espace HelloAsso</a></div></div>
         <div class="mapcard"><div class="q">Modifier le domaine ou les emails</div><div class="a"><a href="https://manager.ovh.com" target="_blank" rel="noopener noreferrer">Manager OVH</a> → Zone DNS / Emails</div></div>
         <div class="mapcard"><div class="q">Voir qui visite le site, forcer une réindexation</div><div class="a"><a href="https://search.google.com/search-console" target="_blank" rel="noopener noreferrer">Google Search Console</a></div></div>
@@ -604,7 +676,7 @@
     </section>
 
     <section id="glossaire">
-      <div class="kicker">08 — Repères</div>
+      <div class="kicker">09 — Repères</div>
       <h2>Glossaire &amp; documentation officielle</h2>
       <p class="dek">Pour approfondir un point sans dépendre de ce document, qui restera volontairement bref.</p>
 
