@@ -182,8 +182,20 @@ reste active 7 jours sur l'appareil.
 
    Puis redéployez (*Deployments → ⋯ → Redeploy*) pour qu'elles soient prises en compte.
 
-> **Changer le mot de passe** — modifiez `ADMIN_PASSWORD` sur Vercel puis redéployez : tous les
-> appareils connectés sont déconnectés.
+**Changer le mot de passe de la console**
+
+1. Sur [vercel.com/dashboard](https://vercel.com/dashboard), ouvrez le projet
+   **humanis-guinee-site** → **Settings** → **Environment Variables**.
+2. Sur la ligne `ADMIN_PASSWORD`, cliquez sur **⋯** → **Edit**, saisissez le nouveau mot de
+   passe, puis **Save**.
+3. **Redéployez** — sans cette étape, l'ancien mot de passe reste actif : onglet
+   **Deployments** → **⋯** sur le dernier déploiement → **Redeploy**.
+
+Une fois le redéploiement terminé (1 à 2 minutes), tous les appareils connectés sont déconnectés
+et doivent se reconnecter avec le nouveau mot de passe.
+
+> Ne touchez pas à `ADMIN_SECRET` : ce n'est pas un mot de passe et personne n'a besoin de le
+> connaître. Ne le changez que si vous pensez qu'il a été divulgué (même procédure).
 
 > **Vidéos de plus de 4 Mo** — la console ne peut pas les envoyer (limite de Vercel). Ajoutez-les
 > directement dans la colonne `Photo` de la table Actualités sur Airtable : elles s'affichent sur
