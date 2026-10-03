@@ -150,6 +150,44 @@ Le site se met à jour automatiquement — il n'y a rien à faire côté Vercel.
 > la séance. Ce n'est pas automatique dans un usage classique de VS Code : sans cet outil, il
 > faut committer et pousser vous-même en suivant les étapes ci-dessus.
 
+### Si le déploiement ne se fait pas
+
+**1. Vérifier ce qui se passe**
+
+- **Sur GitHub** — sur la [page du dépôt](https://github.com/solidairehumanisguinee-git/humanis-guinee-site),
+  un petit symbole apparaît à côté du dernier commit : ✓ vert (déployé), ✗ rouge (échec) ou
+  ● orange (en cours). Cliquez dessus puis sur *Details* pour ouvrir le déploiement dans Vercel.
+- **Sur Vercel** — onglet *Deployments* :
+  - le déploiement est en `Error` → cliquez dessus et lisez les *Build Logs* : l'erreur de code
+    y est indiquée (à reproduire en local avec `npm run build`) ;
+  - le déploiement est **bloqué** (`Blocked`, ou message indiquant que l'auteur du commit n'a pas
+    accès à l'équipe Vercel) ou **n'apparaît pas du tout** → voir le point 2 ;
+  - le déploiement est `Ready` mais le site en ligne n'a pas changé → le domaine est resté sur
+    une ancienne version, voir l'encadré « Si `/admin` renvoie une erreur 404 » en
+    [§7](#7-console-dadministration) (*Promote to Production*).
+
+**2. Déploiement bloqué : passer temporairement le dépôt en public**
+
+Avec l'offre gratuite de Vercel, un dépôt **privé** n'est déployé automatiquement que si le
+commit vient d'un compte autorisé sur le projet Vercel. Un push fait depuis un autre compte GitHub
+(ou depuis l'interface web de GitHub avec un autre compte) peut donc être ignoré ou bloqué. Le
+contournement le plus simple :
+
+1. Sur GitHub, ouvrez le dépôt → **Settings** → onglet **General** → tout en bas, section
+   **Danger Zone** → **Change repository visibility** → **Change to public**, puis confirmez
+   (GitHub demande de retaper le nom du dépôt).
+2. Relancez le déploiement : sur Vercel, *Deployments* → **⋯** sur le dernier déploiement →
+   **Redeploy** (ou poussez un nouveau commit). Attendez qu'il passe à `Ready` et vérifiez le
+   site en ligne.
+3. **⚠️ Ne pas oublier : remettre le dépôt en privé** — même chemin (*Settings → General → Danger
+   Zone → Change repository visibility*) → **Change to private**, puis confirmez. Le site déjà
+   déployé continue de fonctionner normalement.
+
+> Le passage en public ne divulgue aucun mot de passe ni clé : ils sont stockés dans les
+> variables d'environnement de Vercel et dans `.env.local`, qui n'est jamais envoyé sur GitHub.
+> Le code reste toutefois visible de tous tant que le dépôt est public : remettez-le en privé
+> dès que le déploiement est terminé.
+
 ## 7. Console d'administration
 
 La console [`humanisguinee.fr/admin`](https://www.humanisguinee.fr/admin) permet aux membres de
